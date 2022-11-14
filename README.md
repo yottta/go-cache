@@ -1,5 +1,14 @@
 # go-cache
 
+> :warning:
+> 
+> This fork changed the library as follows:
+> * Changed the cache from being able to store interface{} objects to generics which makes it able to store just a specific type of object / instance.
+> * Removed the increment/decrement methods as for most of the object types does not make sens. I plan to add this feature back for the moment when the cache is initialized with T as a number. 
+> 
+> :warning:
+
+
 go-cache is an in-memory key:value store/cache similar to memcached that is
 suitable for applications running on a single machine. Its major advantage is
 that, being essentially a thread-safe `map[string]interface{}` with expiration
