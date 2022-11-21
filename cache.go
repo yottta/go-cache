@@ -117,6 +117,14 @@ func (c *cache[T]) Replace(k string, x T, d time.Duration) error {
 	return nil
 }
 
+// AddOrReplace just adds the given value using the given key.
+// If the key exists, it overrides it, if the key does not exist, it just adds it.
+func (c *cache[T]) AddOrReplace(k string, x T, d time.Duration) {
+	c.mu.Lock()
+	c.set(k, x, d)
+	c.mu.Unlock()
+}
+
 // Get an item from the cache. Returns the[T any item or nil, and a bool indicating
 // whether the key was found.
 func (c *cache[T]) Get(k string) (T, bool) {

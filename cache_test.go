@@ -178,6 +178,26 @@ func TestReplace(t *testing.T) {
 	}
 }
 
+func TestAddOrReplace(t *testing.T) {
+	tc := New[string](DefaultExpiration, 0, func() string { return "" })
+	tc.AddOrReplace("foo", "bar", DefaultExpiration)
+	val, b := tc.Get("foo")
+	if !b {
+		t.Error("Value for foo should exist")
+	}
+	if val != "bar" {
+		t.Errorf("AddOrReplace for foo=bar failed as the returned value is wrong. Expected %s; Actual: %s", "bar", val)
+	}
+	tc.AddOrReplace("foo", "baz", DefaultExpiration)
+	val, b = tc.Get("foo")
+	if !b {
+		t.Error("Value for foo should exist")
+	}
+	if val != "baz" {
+		t.Errorf("AddOrReplace for foo=bar failed as the returned value is wrong. Expected %s; Actual: %s", "baz", val)
+	}
+}
+
 func TestDelete(t *testing.T) {
 	stringPtr := func(s string) *string {
 		return &s
